@@ -1,11 +1,8 @@
-def counting_words():
-    with open('books/frankenstein.txt') as f:
-        file_contents = f.read()
-        words = file_contents.split()
-        return len(words)
+import sys
+from stats import counting_words
 
 def counting_characters():
-    with open('books/frankenstein.txt') as f:
+    with open(sys.argv[1]) as f:
         file_contents = f.read().lower()
         
         dict_characters = {}
@@ -26,11 +23,21 @@ def counting_characters():
         return dict_characters
 
 def main():
-    print("---Begin report of books/frankenstein.txt---")
-    print(f"{counting_words()} words in the document")
+    if len(sys.argv) != 2:
+        print('Usage: python3 main.py <path_to_book>')
+        sys.exit(1)
+
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {sys.argv[1]}")
+    print("----------- Word Count ----------")
+    print(f" Found {counting_words()} total words")
+    print()
+    print("--------- Character Count -------")
     
     for k,v in counting_characters().items():
-        print(f"The letter {k} character was found {v} times")
+        print(f"{k}: {v}")
+    
 
+    
 if __name__ == '__main__':
     main()
